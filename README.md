@@ -1,0 +1,1 @@
+ini rugas buat lomba
