@@ -1,1 +1,1 @@
-ini tugas buat lomba
+ini tugas buat lomba sampah yang disimpen di htdocs.
