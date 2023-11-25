@@ -1,1 +1,1 @@
-ini rugas buat lomba
+ini tugas buat lomba
