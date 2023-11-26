@@ -41,17 +41,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
 <body>
   <div class="container-scroller">
     <?php include 'navbar.php'; ?>
-    <style>.page-body-wrapperz {
-  min-height: calc(100vh - 60px);
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 0;
-}</style>
-    <div class="container-fluid page-body-wrapperz">
+    <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
@@ -330,35 +320,38 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
                                     <thead>
                                         <tr>
                                         <th>No</th>
-                              <th>Sampah</th>
-                              <th>Harga</th>
-                              <th>Aksi</th>
+                              <th>Tanggal</th>
+                              <th>Username</th>
+                              <th>Saldo User</th>
+                              <th>Total Penarikan</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                         <th>No</th>
-                              <th>Sampah</th>
-                              <th>Harga</th>
-                              <th>Aksi</th>
+                              <th>Tanggal</th>
+                              <th>Username</th>
+                              <th>Saldo User</th>
+                              <th>Total Penarikan</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                     <?php 
                                       include "koneksi.php";
-                                       $query=mysqli_query($connect,"Select id_sampah,nama_sampah,harga_sampah from  sampah");
+                                       $query=mysqli_query($connect,"Select id,tanggal_tarik,username,saldo,tarik from  penarikan");
                                        $cnt=1;
                                        while($row=mysqli_fetch_array($query))
                                        {
                                        ?>
                                     <tr>
                                        <th scope="row"><?php echo htmlentities($cnt);?></th>
-                                       <td><?php echo htmlentities($row['nama_sampah']);?></td>
-                                       <td><?php echo htmlentities($row['harga_sampah']);?></td>
-                                       <td><a href="datasampah?nama_sampah=<?php echo htmlentities($row['nama_sampah']); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-</svg></a></td>
+                                       <?php $originalPostingDate = $row['tanggal_tarik'];
+$timestamp = strtotime($originalPostingDate);
+$formattedDate = date("l, d F Y", $timestamp); ?>
+                              <td><?php echo htmlentities($formattedDate);?></td>
+                                       <td><?php echo htmlentities($row['username']);?></td>
+                                       <td><?php echo htmlentities($row['saldo']);?></td>
+                                       <td><?php echo htmlentities($row['tarik']);?></td>
                                     </tr>
                                     <?php
                                        $cnt++;
@@ -411,7 +404,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
             $('#mauexport').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'csv', 'excel', 'pdf', 'copy',
+                    'csv', 'excel', 'copy',
                 ]
             });
         });
@@ -419,7 +412,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
             $('#mauexport2').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'csv', 'excel', 'pdf', 'copy',
+                    'csv', 'excel', 'copy',
                 ]
             });
         });

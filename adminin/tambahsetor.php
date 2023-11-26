@@ -16,7 +16,7 @@ if (isset($_POST['simpan'])) {
     $harga_sampah = $_POST['harga_sampah'];
     $total_harga = $_POST['total_harga'];
     $status = $_POST['status'];
-    $query = "INSERT INTO setorkan(id_setor,tanggal_setor,username,nama_sampah,berat,harga_sampah,total_harga,status) VALUE ('NULL','$tanggal_setor','$username','$nama_sampah','$berat','$harga_sampah','$total_harga','$status')";
+    $query = "INSERT INTO setorkan(id_setor,tanggal_setor,username,nama_sampah,berat,harga_sampah,total_harga,status) VALUE (NULL,'$tanggal_setor','$username','$nama_sampah','$berat','$harga_sampah','$total_harga','$status')";
     $queryact = mysqli_query($connect, $query);
   
     echo "<script>alert('Selamat berhasil input data!')</script>";

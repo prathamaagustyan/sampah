@@ -48,19 +48,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
 <body>
   <div class="container-scroller">
     <?php include 'navbar.php'; ?>
-    <style>
-      .page-body-wrapperd {
-        min-height: calc(100vh - 60px);
-        display: -webkit-flex;
-        display: flex;
-        -webkit-flex-direction: row;
-        flex-direction: row;
-        padding-left: 0;
-        padding-right: 0;
-        padding-top: 0;
-      }
-    </style>
-    <div class="container-fluid page-body-wrapperd">
+    <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
@@ -454,7 +442,7 @@ $formattedDate = date("l, d F Y", $timestamp); ?>
       $('#mauexport').DataTable({
         dom: 'Bfrtip',
         buttons: [
-          'csv', 'excel', 'pdf', 'copy',
+          'csv', 'excel', 'copy',
         ]
       });
     });
@@ -462,7 +450,7 @@ $formattedDate = date("l, d F Y", $timestamp); ?>
       $('#mauexport2').DataTable({
         dom: 'Bfrtip',
         buttons: [
-          'csv', 'excel', 'pdf', 'copy',
+          'csv', 'excel', 'copy',
         ]
       });
     });
