@@ -33,6 +33,12 @@
               <span class="menu-title">Data Tarik</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gudang">
+              <i class="icon-trash menu-icon"></i>
+              <span class="menu-title">Gudang</span>
+            </a>
+          </li>
           <?php endif;?>
           <?php if($_SESSION['email']=='prathamaagustyan@gmail.com'):?>
           <li class="nav-item">
@@ -68,9 +74,21 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="riwayatsetoruser">
+              <i class="icon-cloud menu-icon"></i>
+              <span class="menu-title">Riwayat Setor</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="saldouser">
               <i class="icon-cloud menu-icon"></i>
               <span class="menu-title">Saldo</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="riwayatpenarikanuser">
+              <i class="icon-cloud menu-icon"></i>
+              <span class="menu-title">Riwayat Penarikan</span>
             </a>
           </li>
           <?php endif;?>

@@ -253,44 +253,47 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
             </div>
             <div class="col-md-6 grid-margin transparent">
               <div class="row">
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-tale">
-                    <div class="card-body">
-                      <p class="mb-4">Today’s Bookings</p>
-                      <p class="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
-                    </div>
-                  </div>
+                <?php
+include "koneksi.php";
+
+// Memastikan koneksi berhasil
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    exit();
+}
+
+// Menginisialisasi array untuk menyimpan total berat setiap jenis sampah
+$totals = array();
+
+// Mengambil data dari database
+$sql = mysqli_query($connect, "SELECT * FROM setorkan");
+while ($data = mysqli_fetch_array($sql)) {
+    $nama_sampah = $data['nama_sampah'];
+    $berat = $data['berat'];
+
+    // Menambahkan berat ke dalam array totals sesuai jenis sampah
+    if (!isset($totals[$nama_sampah])) {
+        $totals[$nama_sampah] = 0;
+    }
+    $totals[$nama_sampah] += $berat;
+}
+
+// Menampilkan hasil per jenis sampah
+foreach ($totals as $nama_sampah => $total_berat) {
+    echo "
+        <div class='col-md-6 mb-4 stretch-card transparent'>
+            <div class='card card-tale'>
+                <div class='card-body'>
+                    <p class='mb-4'>$nama_sampah</p>
+                    <p class='fs-30 mb-2'>$total_berat kg</p>
                 </div>
-                <div class="col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-dark-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
-                      <p class="fs-30 mb-2">61344</p>
-                      <p>22.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                  <div class="card card-light-blue">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
-                      <p class="fs-30 mb-2">34040</p>
-                      <p>2.00% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
-                    </div>
-                  </div>
-                </div>
+            </div>
+        </div>";
+}
+
+// Menutup koneksi
+mysqli_close($connect);
+?>
               </div>
             </div>
           </div>

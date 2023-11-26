@@ -350,8 +350,8 @@ $timestamp = strtotime($originalPostingDate);
 $formattedDate = date("l, d F Y", $timestamp); ?>
                               <td><?php echo htmlentities($formattedDate);?></td>
                                        <td><?php echo htmlentities($row['username']);?></td>
-                                       <td><?php echo htmlentities($row['saldo']);?></td>
-                                       <td><?php echo htmlentities($row['tarik']);?></td>
+                                       <td><?php echo "Rp. ".number_format($row['saldo'], 2, ",", ".")   ?></td>
+                                       <td><?php echo "Rp. ".number_format($row['tarik'], 2, ",", ".")   ?></td>
                                     </tr>
                                     <?php
                                        $cnt++;
