@@ -240,7 +240,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card tale-bg">
                 <div class="card-people mt-auto">
@@ -301,7 +301,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">

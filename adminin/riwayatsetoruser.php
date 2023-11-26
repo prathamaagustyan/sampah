@@ -257,7 +257,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card tale-bg">
                 <div class="card-people mt-auto">
@@ -318,7 +318,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
@@ -376,7 +376,7 @@ $formattedDate = date("l, d F Y", $timestamp); ?>
                               <td><?php echo htmlentities($row['nama_sampah']);?></td>
                               <td><?php echo htmlentities($row['berat']);?> Kg</td>
                               <td><?php echo "Rp. ".number_format($row['harga_sampah'], 2, ",", ".")   ?></td>
-                              <td><?php echo "Rp. ".number_format($peg['total_harga'], 2, ",", ".")   ?></td>
+                              <td><?php echo "Rp. ".number_format($row['total_harga'], 2, ",", ".")   ?></td>
                               <td><?php echo htmlentities($row['status']);?></td>
                             </tr>
                             <?php

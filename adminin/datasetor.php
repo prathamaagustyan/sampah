@@ -1,43 +1,78 @@
 <?php
 include "koneksi.php";
-session_start(); // Start session nya
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 10);
 
-// Kita cek apakah user sudah login atau belum
-// Cek nya dengan cara cek apakah terdapat session username atau tidak
-if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti dia belum login
-	header("location: index"); // Kita Redirect ke halaman index.php karena belum login
-  }else{
+// Fungsi untuk insert atau update saldo
+function insertOrUpdateSaldo($connect, $username, $total_harga) {
+    // Mendapatkan tanggal saat ini
+    $tanggal_saldo = date("Y-m-d");
+
+    // Memeriksa apakah sudah ada entri saldo untuk pengguna pada tanggal tertentu
+    $queryCheck = "SELECT * FROM saldo WHERE username='$username' AND tanggal_saldo='$tanggal_saldo'";
+    $resultCheck = mysqli_query($connect, $queryCheck);
+
+    if (mysqli_num_rows($resultCheck) > 0) {
+        // Jika sudah ada, lakukan pembaruan (update)
+        $queryUpdateSaldo = "UPDATE saldo SET saldo_masuk=saldo_masuk+'$total_harga' WHERE username='$username' AND tanggal_saldo='$tanggal_saldo'";
+        $executeUpdate = mysqli_query($connect, $queryUpdateSaldo);
+
+        if ($executeUpdate) {
+            $msg = "Saldo updated successfully for today.";
+        } else {
+            $msg = "Failed to update saldo for today. Error: " . mysqli_error($connect);
+        }
+    } else {
+        // Jika belum ada, lakukan penyisipan (insert)
+        $queryInsertSaldo = "INSERT INTO saldo (tanggal_saldo, username, saldo_keluar, saldo_masuk) VALUES ('$tanggal_saldo', '$username', 0, '$total_harga')";
+        $executeInsert = mysqli_query($connect, $queryInsertSaldo);
+
+        if ($executeInsert) {
+            $msg = "Saldo inserted successfully for today.";
+        } else {
+            $msg = "Failed to insert saldo for today. Error: " . mysqli_error($connect);
+        }
+    }
+
+    return $msg;
+}
+
+if (!isset($_SESSION['username'])) {
+    header("location: index");
+} else {
     if ($_GET['action'] == 'del' && isset($_GET['rid'])) {
-      $id = intval($_GET['rid']);
-      
-      // Get data from 'setorkan' table
-      $querySelect = mysqli_query($connect, "SELECT * FROM setorkan WHERE id_setor='$id'");
-      
-      if ($row = mysqli_fetch_assoc($querySelect)) {
-          $username = $row['username'];
-          $total_harga = $row['total_harga'];
-  
-          // Update 'saldo_user' in 'user' table
-          $queryUpdate = mysqli_query($connect, "UPDATE user SET saldo_user=saldo_user+'$total_harga' WHERE username='$username'");
-          
-          if ($queryUpdate) {
-              // Update status in 'setorkan' table
-              $queryUpdateStatus = mysqli_query($connect, "UPDATE setorkan SET status='Sudah di Verifikasi' WHERE id_setor='$id'");
-              
-              if ($queryUpdateStatus) {
-                  $msg = "Data moved to second table successfully.";
-              } else {
-                  $msg = "Failed to update status in the first table.";
-              }
-          } else {
-              $msg = "Failed to update saldo_user in the second table.";
-          }
-      } else {
-          $msg = "No data found with that ID.";
-      }
-  }
-  
+        $id = intval($_GET['rid']);
+
+        $querySelect = mysqli_query($connect, "SELECT * FROM setorkan WHERE id_setor='$id'");
+
+        if ($row = mysqli_fetch_assoc($querySelect)) {
+            $username = $row['username'];
+            $total_harga = $row['total_harga'];
+
+            $queryUpdate = mysqli_query($connect, "UPDATE user SET saldo_user=saldo_user+'$total_harga' WHERE username='$username'");
+
+            if ($queryUpdate) {
+                $queryUpdateStatus = mysqli_query($connect, "UPDATE setorkan SET status='Sudah di Verifikasi' WHERE id_setor='$id'");
+
+                if ($queryUpdateStatus) {
+                    // Memanggil fungsi untuk insert atau update saldo
+                    $msg = insertOrUpdateSaldo($connect, $username, $total_harga);
+                } else {
+                    $msg = "Failed to update status in the first table.";
+                }
+            } else {
+                $msg = "Failed to update saldo_user in the second table.";
+            }
+        } else {
+            $msg = "No data found with that ID.";
+        }
+    }
+}
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -281,7 +316,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
               <div class="card tale-bg">
                 <div class="card-people mt-auto">
@@ -342,7 +377,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
@@ -498,4 +533,3 @@ $formattedDate = date("l, d F Y", $timestamp); ?>
 </body>
 
 </html>
-<?php } ?>

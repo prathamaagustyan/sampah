@@ -1,7 +1,8 @@
 <?php
 // Include file gpconfig
 include_once 'gpconfig.php';
-
+error_reporting(E_ALL);
+ini_set('display_errors', 10);
 if(isset($_GET['code'])){
 	$gclient->authenticate($_GET['code']);
 	$_SESSION['token'] = $gclient->getAccessToken();
@@ -33,7 +34,7 @@ if ($gclient->getAccessToken()) {
 		$username = $ex[0]; // Ambil kata pertama
 
 		// Lakukan insert data user baru tanpa password
-		mysqli_query($connect, "INSERT INTO user(username, nama, poto, email) VALUES('".$username."', '".$nama."', '".$poto."', '".$email."')");
+		mysqli_query($connect, "INSERT INTO user(username, nama, poto, email, alamat, koordinat, notelp, usertype, saldo_user) VALUES('".$username."', '".$nama."', '".$poto."', '".$email."', '".NULL."', '".NULL."', '".NULL."', '".NULL."', 0)");
 
 		$id = mysqli_insert_id($connect); // Ambil id user yang baru saja di insert
 	}else{

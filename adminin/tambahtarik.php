@@ -1,15 +1,18 @@
 <?php
-   session_start();
-   error_reporting(0);
-   include('koneksi.php');
-// Kita cek apakah user sudah login atau belum
-// Cek nya dengan cara cek apakah terdapat session username atau tidak
-if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti dia belum login
-	header("location: index"); // Kita Redirect ke halaman index.php karena belum login
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+include('koneksi.php');
+
+if (!isset($_SESSION['username'])) {
+    header("location: index.php");
+    exit();
 }
 
 if (isset($_POST['simpan'])) {
     require_once("koneksi.php");
+
     $tanggal_tarik = $_POST['tanggal_tarik'];
     $username = $_POST['username'];
     $saldo = $_POST['saldo'];
@@ -17,25 +20,63 @@ if (isset($_POST['simpan'])) {
     $petugas = $_POST['petugas'];
 
     // Ambil saldo saat ini dari database
-    $query_saldo = mysqli_query($connect, "SELECT saldo_user FROM user WHERE username = '$username'");
-    $row = mysqli_fetch_assoc($query_saldo);
-    $saldo_sekarang = $row['saldo_user'];
-    
+    $query_saldo = "SELECT saldo_user FROM user WHERE username = ?";
+    $stmt_saldo = mysqli_prepare($connect, $query_saldo);
+    mysqli_stmt_bind_param($stmt_saldo, "s", $username);
+    mysqli_stmt_execute($stmt_saldo);
+    mysqli_stmt_bind_result($stmt_saldo, $saldo_sekarang);
+    mysqli_stmt_fetch($stmt_saldo);
+    mysqli_stmt_close($stmt_saldo);
+
     // Periksa apakah saldo mencukupi untuk penarikan
     if ($saldo_sekarang >= $tarik) {
         $saldo_setelah_tarik = $saldo_sekarang - $tarik;
 
-        // Update saldo user setelah penarikan
-        $update_saldo = mysqli_query($connect, "UPDATE user SET saldo_user = '$saldo_setelah_tarik' WHERE username = '$username'");
-        
-        if ($update_saldo) {
+        // Gunakan prepared statement untuk menghindari SQL injection
+        $query_update_saldo = "UPDATE user SET saldo_user = ? WHERE username = ?";
+        $stmt_update_saldo = mysqli_prepare($connect, $query_update_saldo);
+        mysqli_stmt_bind_param($stmt_update_saldo, "ss", $saldo_setelah_tarik, $username);
+        $update_saldo_result = mysqli_stmt_execute($stmt_update_saldo);
+        mysqli_stmt_close($stmt_update_saldo);
+
+        if ($update_saldo_result) {
             // Simpan data penarikan ke dalam database
-            $query = "INSERT INTO penarikan (id, tanggal_tarik, username, saldo, tarik, petugas) VALUES (NULL, '$tanggal_tarik', '$username', '$saldo', '$tarik', '$petugas')";
-            $queryact = mysqli_query($connect, $query);
+            $query_insert_penarikan = "INSERT INTO penarikan (tanggal_tarik, username, saldo, tarik, petugas) VALUES (?, ?, ?, ?, ?)";
+            $stmt_insert_penarikan = mysqli_prepare($connect, $query_insert_penarikan);
+            mysqli_stmt_bind_param($stmt_insert_penarikan, "sssss", $tanggal_tarik, $username, $saldo, $tarik, $petugas);
+            $insert_penarikan_result = mysqli_stmt_execute($stmt_insert_penarikan);
+            mysqli_stmt_close($stmt_insert_penarikan);
 
-            echo "<script>alert('Selamat berhasil input data!')</script>";
+            if ($insert_penarikan_result) {
+                // Periksa apakah sudah ada saldo pada tanggal tersebut
+                $query_check_saldo = "SELECT * FROM saldo WHERE tanggal_saldo = ? AND username = ?";
+                $stmt_check_saldo = mysqli_prepare($connect, $query_check_saldo);
+                mysqli_stmt_bind_param($stmt_check_saldo, "ss", $tanggal_tarik, $username);
+                mysqli_stmt_execute($stmt_check_saldo);
+                $result_check_saldo = mysqli_stmt_get_result($stmt_check_saldo);
 
-            echo "<meta http-equiv='refresh' content='0; url=http://localhost/sampah/adminin/tambahtarik'>";
+                if (mysqli_num_rows($result_check_saldo) > 0) {
+                    // Jika sudah ada saldo pada tanggal tersebut, lakukan update
+                    $query_update_saldo = "UPDATE saldo SET saldo_keluar = saldo_keluar + ? WHERE tanggal_saldo = ? AND username = ?";
+                    $stmt_update_saldo = mysqli_prepare($connect, $query_update_saldo);
+                    mysqli_stmt_bind_param($stmt_update_saldo, "sss", $tarik, $tanggal_tarik, $username);
+                    mysqli_stmt_execute($stmt_update_saldo);
+                    mysqli_stmt_close($stmt_update_saldo);
+                } else {
+                    // Jika belum ada saldo pada tanggal tersebut, lakukan insert
+                    $query_insert_saldo = "INSERT INTO saldo (tanggal_saldo, username, saldo_keluar, saldo_masuk) VALUES (?, ?, ?, 0)";
+                    $stmt_insert_saldo = mysqli_prepare($connect, $query_insert_saldo);
+                    mysqli_stmt_bind_param($stmt_insert_saldo, "sss", $tanggal_tarik, $username, $tarik);
+                    mysqli_stmt_execute($stmt_insert_saldo);
+                    mysqli_stmt_close($stmt_insert_saldo);
+                }
+
+                echo "<script>alert('Selamat berhasil input data!')</script>";
+                echo "<meta http-equiv='refresh' content='0; url=http://localhost/sampah/adminin/tambahtarik'>";
+            } else {
+                $msg = "Failed to update status in the first table.";
+                echo "<script>alert('$msg')</script>";
+            }
         } else {
             echo "Gagal mengupdate saldo.";
         }
@@ -43,8 +84,11 @@ if (isset($_POST['simpan'])) {
         echo "<script>alert('Saldo tidak mencukupi untuk penarikan ini. !')</script>";
     }
 }
+?>
 
-   ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
