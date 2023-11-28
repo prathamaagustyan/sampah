@@ -1,8 +1,6 @@
 <?php
 include "koneksi.php";
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 10);
 
 // Fungsi untuk insert atau update saldo
 function insertOrUpdateSaldo($connect, $username, $total_harga) {

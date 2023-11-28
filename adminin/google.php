@@ -1,8 +1,7 @@
 <?php
 // Include file gpconfig
 include_once 'gpconfig.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 10);
+
 if(isset($_GET['code'])){
 	$gclient->authenticate($_GET['code']);
 	$_SESSION['token'] = $gclient->getAccessToken();
