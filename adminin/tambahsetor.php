@@ -351,9 +351,15 @@ if (isset($_POST['simpan'])) {
           }  
 
            </script>
+           
+          <!-- tampilan baru -->
+          
+          <!-- end tampilan baru -->
                             </div>
                         </div>
                     </div>
+
+        
                     <!-- content-wrapper ends -->
                     <!-- partial:partials/_footer.html -->
                     <footer class="footer">
