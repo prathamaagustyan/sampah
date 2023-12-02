@@ -166,6 +166,8 @@
         </div><!-- end container -->
     </div><!-- end section -->
 	
+<!-- TOTAL BERAT SAMPAH -->
+
 	<div class="section cont-box">
 		<div class="container-fluid">
 			<div class="row">
@@ -328,8 +330,14 @@
 					<br>
 					<br>
 					<br>
+					<div class="form-group">
+                                        <label for="exampleInputEmail3">Berat Sampah (dalam KG)</label>
+                                        <input type="text" name="berat" class="form-control" id="berat" onkeyup="sum();"
+                                            placeholder="Contoh: 3">
+                                    </div>
 					<a href="adminin" class="hvr-radial-in pricingTable-signup"><i class="fa fa-dot-circle-o"></i>Tukar Sekarang</a>
 				</div>
+				
 			</div>
 
 			<div class="col-md-4 col-sm-6">
