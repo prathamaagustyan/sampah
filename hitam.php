@@ -1,1 +1,0 @@
-orang hitam putih kotor
