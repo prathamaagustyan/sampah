@@ -330,11 +330,6 @@
 					<br>
 					<br>
 					<br>
-					<div class="form-group">
-                                        <label for="exampleInputEmail3">Berat Sampah (dalam KG)</label>
-                                        <input type="text" name="berat" class="form-control" id="berat" onkeyup="sum();"
-                                            placeholder="Contoh: 3">
-                                    </div>
 					<a href="adminin" class="hvr-radial-in pricingTable-signup"><i class="fa fa-dot-circle-o"></i>Tukar Sekarang</a>
 				</div>
 				
