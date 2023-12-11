@@ -357,7 +357,7 @@ if (mysqli_num_rows($tampilPeg) > 0) {
 ?>
                 <div class="col">
                     <div class="card">
-                        <img src="../images/fotosampah/gotongroyong5.jpeg" class="card-img-topp" alt="...">
+                        <img src="../images/<?= $peg['potosampah'] ?>" class="card-img-topp" alt="...">
                         <div class="card-body">
                             <input type="hidden" name="card[<?= $peg['id_sampah'] ?>][tanggal_setor]" class="form-control"
                                 placeholder="Contoh: Botol Plastik" value="<?php echo date("Y-m-d");?>">

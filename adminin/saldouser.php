@@ -323,11 +323,8 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title">Data Sampah</p>
-                  <a href="tambahsetor"><button type="button" class="btn btn-sm btn-outline-success btn-icon-text">
-                      <i class="ti-plus btn-icon-prepend"></i>
-                      Tambah
-                    </button></a>
+                  <p class="card-title">Data Saldo</p>
+                  
                   <br>
                   <br>
                   <div class="row">
