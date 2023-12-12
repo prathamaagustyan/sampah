@@ -2,7 +2,7 @@
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-        <?php if($_SESSION['email']=='ijustmaking@gmail.com'):?>
+        <?php if($_SESSION['email']=='sacibatekaje@gmail.com'):?>
           <li class="nav-item">
             <a class="nav-link" href="beranda">
               <i class="icon-grid menu-icon"></i>
