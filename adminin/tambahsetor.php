@@ -42,7 +42,7 @@ if (isset($_POST['simpan'])) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Skydash Admin</title>
+    <title>Tambah Setor</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="vendors/feather/feather.css">
     <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
@@ -59,7 +59,7 @@ if (isset($_POST['simpan'])) {
     <!-- inject:css -->
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="images/favicon.png" />
+    <link rel="shortcut icon" href="../images/logokan.png" />
 </head>
 
 <body>
@@ -261,7 +261,7 @@ if (isset($_POST['simpan'])) {
                                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                                     <h3 class="font-weight-bold">Welcome <?php echo $_SESSION['username']; ?></h3>
                                     <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span
-                                            class="text-primary">3 unread alerts!</span></h6>
+                                            class="text-primary"><span style="color: #8dbd56;">3 unread alerts!</span></span></h6>
                                 </div>
                                 <div class="col-12 col-xl-4">
                                     <div class="justify-content-end d-flex">
@@ -315,20 +315,17 @@ if (isset($_POST['simpan'])) {
         margin-top: -15px;
     }
 
-    .btn-primary {
+    .btn-setorin {
         border-radius: 50px;
         width: 120px;
     }
 
-    .btn-primary:hover {
-        background-color: black;
+    .btn-setorin:hover {
+        background-color: #8dbd56;
         border: none;
     }
 
-    h3,
-    h5 {
-        color: rgb(0, 91, 228);
-    }
+
 </style>
 
 <!DOCTYPE html>
@@ -338,7 +335,6 @@ if (isset($_POST['simpan'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -377,10 +373,8 @@ if (mysqli_num_rows($tampilPeg) > 0) {
                             <input type="hidden" name="card[<?= $peg['id_sampah'] ?>][status]" class="form-control" id="exampleInputEmail3"
                                             placeholder="Contoh: Botol Plastik" value="Belum di Verifikasi">
                         </div>
-                        <div class="mb-5 d-flex justify-content-around">
-                            <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </h3>
-                            <button name="simpan" class="btn btn-primary">Setor</button>
+                        <div class="mb-5 d-flex justify-content-end">
+                            <button name="simpan" class="btn btn-setorin" style="margin-right: 20px; background-color: #8dbd56;"><strong style="color: #FFF">Setor</strong></button>
                         </div>
                     </div>
 
