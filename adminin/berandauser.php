@@ -14,7 +14,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Beranda</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
@@ -28,7 +28,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../images/logokan.png" />
 </head>
 <body>
   <div class="container-scroller">
@@ -211,7 +211,7 @@ if( ! isset($_SESSION['username'])){ // Jika tidak ada session username berarti 
             <div class="col-md-12 grid-margin">
               <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                  <h3 class="font-weight-bold">Welcome <?php echo $_SESSION['username']; ?></h3>
+                  <h3 class="font-weight-bold" style="color: #000000;">Welcome <?php echo $_SESSION['username']; ?></h3>
                   <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
                 </div>
                 <div class="col-12 col-xl-4">
