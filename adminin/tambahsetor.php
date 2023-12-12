@@ -365,7 +365,7 @@ if (mysqli_num_rows($tampilPeg) > 0) {
                             <p class="card-text">
                                 <strong><?php echo "Rp. ".number_format($peg['harga_sampah'], 2, ",", ".")   ?></strong>
                             </p>
-                            <input type="text" class="form-control" name="card[<?= $peg['id_sampah'] ?>][berat]" placeholder="Masukkan berat sampah"
+                            <input type="text" class="form-control" name="card[<?= $peg['id_sampah'] ?>][berat]" placeholder="Masukkan berat sampah (Kg)"
                                 oninput="updateTotalHarga(this, this.parentElement.querySelector('.total-harga'), <?= $peg['harga_sampah'] ?>)">
                             <br>
                             <input type="hidden" name="card[<?= $peg['id_sampah'] ?>][total_harga]" class="total-harga-input">
